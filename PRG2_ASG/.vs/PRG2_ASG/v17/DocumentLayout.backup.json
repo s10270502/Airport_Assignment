@@ -11,10 +11,6 @@
       "RelativeMoniker": "D:0:0:{67565309-DF67-4AEA-AFC0-D9DE92BCED3D}|PRG2_ASG\\PRG2_ASG.csproj|solutionrelative:prg2_asg\\flight.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{67565309-DF67-4AEA-AFC0-D9DE92BCED3D}|PRG2_ASG\\PRG2_ASG.csproj|c:\\users\\user\\documents\\github\\airport_assignment\\prg2_asg\\prg2_asg\\airline.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{67565309-DF67-4AEA-AFC0-D9DE92BCED3D}|PRG2_ASG\\PRG2_ASG.csproj|solutionrelative:prg2_asg\\airline.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{67565309-DF67-4AEA-AFC0-D9DE92BCED3D}|PRG2_ASG\\PRG2_ASG.csproj|c:\\users\\user\\documents\\github\\airport_assignment\\prg2_asg\\prg2_asg\\ddjbflight.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{67565309-DF67-4AEA-AFC0-D9DE92BCED3D}|PRG2_ASG\\PRG2_ASG.csproj|solutionrelative:prg2_asg\\ddjbflight.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -65,26 +61,14 @@
               "RelativeDocumentMoniker": "PRG2_ASG\\Program.cs",
               "ToolTip": "C:\\Users\\User\\Documents\\GitHub\\Airport_Assignment\\PRG2_ASG\\PRG2_ASG\\Program.cs",
               "RelativeToolTip": "PRG2_ASG\\Program.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABYAAAA5AAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABgAAAAoAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-01-16T02:14:50.698Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "Airline.cs",
-              "DocumentMoniker": "C:\\Users\\User\\Documents\\GitHub\\Airport_Assignment\\PRG2_ASG\\PRG2_ASG\\Airline.cs",
-              "RelativeDocumentMoniker": "PRG2_ASG\\Airline.cs",
-              "ToolTip": "C:\\Users\\User\\Documents\\GitHub\\Airport_Assignment\\PRG2_ASG\\PRG2_ASG\\Airline.cs",
-              "RelativeToolTip": "PRG2_ASG\\Airline.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-01-16T06:43:18.465Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 3,
               "Title": "flights.csv",
               "DocumentMoniker": "C:\\Users\\User\\Documents\\GitHub\\Airport_Assignment\\PRG2_ASG\\PRG2_ASG\\flights.csv",
               "RelativeDocumentMoniker": "PRG2_ASG\\flights.csv",
@@ -96,7 +80,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 2,
               "Title": "DDJBFlight.cs",
               "DocumentMoniker": "C:\\Users\\User\\Documents\\GitHub\\Airport_Assignment\\PRG2_ASG\\PRG2_ASG\\DDJBFlight.cs",
               "RelativeDocumentMoniker": "PRG2_ASG\\DDJBFlight.cs",
@@ -108,7 +92,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 4,
               "Title": "NORMFlight.cs",
               "DocumentMoniker": "C:\\Users\\User\\Documents\\GitHub\\Airport_Assignment\\PRG2_ASG\\PRG2_ASG\\NORMFlight.cs",
               "RelativeDocumentMoniker": "PRG2_ASG\\NORMFlight.cs",
@@ -120,7 +104,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 5,
               "Title": "LWTTFlight.cs",
               "DocumentMoniker": "C:\\Users\\User\\Documents\\GitHub\\Airport_Assignment\\PRG2_ASG\\PRG2_ASG\\LWTTFlight.cs",
               "RelativeDocumentMoniker": "PRG2_ASG\\LWTTFlight.cs",
@@ -132,7 +116,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 6,
               "Title": "CFFTFlight.cs",
               "DocumentMoniker": "C:\\Users\\User\\Documents\\GitHub\\Airport_Assignment\\PRG2_ASG\\PRG2_ASG\\CFFTFlight.cs",
               "RelativeDocumentMoniker": "PRG2_ASG\\CFFTFlight.cs",
