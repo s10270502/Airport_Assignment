@@ -26,7 +26,39 @@ namespace PRG2_ASG
 
         public bool AddAirline(Airline airline)
         {
-            Airlines.Add(airline.Name, airline);
+            Airlines.Add(airline.Code, airline);
+            return true;
+        }
+
+        public bool AddBoardingGate(BoardingGate boardingGate)
+        {
+            BoardingGates.Add(boardingGate.GateName, boardingGate);
+            return true;
+        }
+
+        public Airline GetAirlineFromFlight(Flight flight)
+        {
+            foreach(var airline in Airlines.Values)
+            {
+                if (flight.flightNumber.StartsWith(airline.Code))
+                {
+                    return airline;
+                }
+            }
+            return null;
+        }
+
+        public void PrintAirlineFees()
+        {
+            foreach(var fee in Airlines.Values)
+            {
+                Console.WriteLine($"{fee.Name} Total Fee: {fee.CalculateFees}");
+            }
+        }
+
+        public override string ToString()
+        {
+            return "Terminal Name: " + TerminalName;
         }
     }
 }

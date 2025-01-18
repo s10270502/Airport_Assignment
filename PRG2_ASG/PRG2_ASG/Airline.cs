@@ -25,13 +25,17 @@ namespace PRG2_ASG
 
         public bool AddFlight(Flight flight)
         {
-            Flights.Add(Code, flight);
+            if(Flights.ContainsKey(flight.flightNumber))
+            {
+                return false;
+            }
+            Flights.Add(flight.flightNumber, flight);
             return true;
         }
 
         public double CalculateFees()
         {
 
-        }
+        } 
     }
 }
