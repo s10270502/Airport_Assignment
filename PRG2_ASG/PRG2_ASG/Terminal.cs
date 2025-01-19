@@ -26,6 +26,10 @@ namespace PRG2_ASG
 
         public bool AddAirline(Airline airline)
         {
+            if(Airlines.ContainsKey(airline.Code))
+            {
+                return false;
+            }
             Airlines.Add(airline.Code, airline);
             return true;
         }
