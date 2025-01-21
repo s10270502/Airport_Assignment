@@ -27,7 +27,7 @@ namespace PRG2_ASG
             return $" ";
         }
 
-        public abstract double CalculateFees();
+        public double CalculateFees();
 
 
 
