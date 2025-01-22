@@ -30,14 +30,7 @@ namespace PRG2_ASG
 
         public double CalculateFees()
         {
-            if(Flight == null)
-            {
-                return 0.0;
-            }
-            else
-            {
-                return Flight.CalculateFees();
-            }
+            return 300.0;
         }
 
         public override string ToString()

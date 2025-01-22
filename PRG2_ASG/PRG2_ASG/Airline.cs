@@ -29,13 +29,19 @@ namespace PRG2_ASG
             {
                 return false;
             }
-            Flights.Add(flight.flightNumber, flight);
+            Flights.Add(Code, flight);
             return true;
         }
 
         public double CalculateFees()
         {
-
+            int numberOfFlights = Flights.Values.Count;
+            int numberOfDiscount = numberOfFlights / 3;
+            int discountGiven = 350 * numberOfDiscount;
+            if (numberOfFlights > 5)
+            {
+                
+            }
         } 
     }
 }

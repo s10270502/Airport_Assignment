@@ -27,7 +27,10 @@ namespace PRG2_ASG
             return $" ";
         }
 
-        public double CalculateFees();
+        public virtual double CalculateFees()
+        {
+          
+        }
 
 
 
