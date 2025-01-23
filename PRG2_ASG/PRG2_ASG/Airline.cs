@@ -35,6 +35,12 @@ namespace PRG2_ASG
 
         public double CalculateFees()
         {
+            double totalDiscount = 0;
+            double totalFees = 0;   
+            foreach (var flight in Flights.Values)
+            {
+                totalFees += flight.CalculateFees();
+            }
             int numberOfFlights = Flights.Values.Count;
             int numberOfDiscount = numberOfFlights / 3;
             int discountGiven = 350 * numberOfDiscount;

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\jgwz0\\Documents\\GitHub\\Airport_Assignment\\PRG2_ASG\\PRG2_ASG\\PRG2_ASG.csproj": {}
+    "D:\\OneDrive - Ngee Ann Polytechnic\\PRG2\\Assg2\\PRG2_ASG\\PRG2_ASG\\PRG2_ASG.csproj": {}
   },
   "projects": {
-    "C:\\Users\\jgwz0\\Documents\\GitHub\\Airport_Assignment\\PRG2_ASG\\PRG2_ASG\\PRG2_ASG.csproj": {
+    "D:\\OneDrive - Ngee Ann Polytechnic\\PRG2\\Assg2\\PRG2_ASG\\PRG2_ASG\\PRG2_ASG.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\jgwz0\\Documents\\GitHub\\Airport_Assignment\\PRG2_ASG\\PRG2_ASG\\PRG2_ASG.csproj",
+        "projectUniqueName": "D:\\OneDrive - Ngee Ann Polytechnic\\PRG2\\Assg2\\PRG2_ASG\\PRG2_ASG\\PRG2_ASG.csproj",
         "projectName": "PRG2_ASG",
-        "projectPath": "C:\\Users\\jgwz0\\Documents\\GitHub\\Airport_Assignment\\PRG2_ASG\\PRG2_ASG\\PRG2_ASG.csproj",
+        "projectPath": "D:\\OneDrive - Ngee Ann Polytechnic\\PRG2\\Assg2\\PRG2_ASG\\PRG2_ASG\\PRG2_ASG.csproj",
         "packagesPath": "C:\\Users\\jgwz0\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\jgwz0\\Documents\\GitHub\\Airport_Assignment\\PRG2_ASG\\PRG2_ASG\\obj\\",
+        "outputPath": "D:\\OneDrive - Ngee Ann Polytechnic\\PRG2\\Assg2\\PRG2_ASG\\PRG2_ASG\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

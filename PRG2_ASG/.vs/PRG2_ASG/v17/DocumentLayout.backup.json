@@ -3,16 +3,16 @@
   "WorkspaceRootPath": "C:\\Users\\jgwz0\\Documents\\GitHub\\Airport_Assignment\\PRG2_ASG\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{67565309-DF67-4AEA-AFC0-D9DE92BCED3D}|PRG2_ASG\\PRG2_ASG.csproj|c:\\users\\jgwz0\\documents\\github\\airport_assignment\\prg2_asg\\prg2_asg\\terminal.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{67565309-DF67-4AEA-AFC0-D9DE92BCED3D}|PRG2_ASG\\PRG2_ASG.csproj|solutionrelative:prg2_asg\\terminal.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{67565309-DF67-4AEA-AFC0-D9DE92BCED3D}|PRG2_ASG\\PRG2_ASG.csproj|c:\\users\\jgwz0\\documents\\github\\airport_assignment\\prg2_asg\\prg2_asg\\airline.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{67565309-DF67-4AEA-AFC0-D9DE92BCED3D}|PRG2_ASG\\PRG2_ASG.csproj|solutionrelative:prg2_asg\\airline.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{67565309-DF67-4AEA-AFC0-D9DE92BCED3D}|PRG2_ASG\\PRG2_ASG.csproj|c:\\users\\jgwz0\\documents\\github\\airport_assignment\\prg2_asg\\prg2_asg\\boardinggate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{67565309-DF67-4AEA-AFC0-D9DE92BCED3D}|PRG2_ASG\\PRG2_ASG.csproj|solutionrelative:prg2_asg\\boardinggate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{67565309-DF67-4AEA-AFC0-D9DE92BCED3D}|PRG2_ASG\\PRG2_ASG.csproj|c:\\users\\jgwz0\\documents\\github\\airport_assignment\\prg2_asg\\prg2_asg\\terminal.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{67565309-DF67-4AEA-AFC0-D9DE92BCED3D}|PRG2_ASG\\PRG2_ASG.csproj|solutionrelative:prg2_asg\\terminal.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{67565309-DF67-4AEA-AFC0-D9DE92BCED3D}|PRG2_ASG\\PRG2_ASG.csproj|c:\\users\\jgwz0\\documents\\github\\airport_assignment\\prg2_asg\\prg2_asg\\lwttflight.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -50,7 +50,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 5,
+          "SelectedChildIndex": 4,
           "Children": [
             {
               "$type": "Document",
@@ -63,8 +63,7 @@
               "ViewState": "AgIAAA0AAAAAAAAAAAA5wB4AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-01-16T05:55:57.071Z",
-              "IsPinned": true,
-              "EditorCaption": ""
+              "IsPinned": true
             },
             {
               "$type": "Bookmark",
@@ -76,39 +75,39 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "BoardingGate.cs",
               "DocumentMoniker": "C:\\Users\\jgwz0\\Documents\\GitHub\\Airport_Assignment\\PRG2_ASG\\PRG2_ASG\\BoardingGate.cs",
               "RelativeDocumentMoniker": "PRG2_ASG\\BoardingGate.cs",
               "ToolTip": "C:\\Users\\jgwz0\\Documents\\GitHub\\Airport_Assignment\\PRG2_ASG\\PRG2_ASG\\BoardingGate.cs",
               "RelativeToolTip": "PRG2_ASG\\BoardingGate.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAcwC8AAAA0AAAAAAAAAA==",
+              "ViewState": "AgIAAAoAAAAAAAAAAAA6wC8AAAA0AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-01-17T11:06:20.984Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 0,
               "Title": "Terminal.cs",
               "DocumentMoniker": "C:\\Users\\jgwz0\\Documents\\GitHub\\Airport_Assignment\\PRG2_ASG\\PRG2_ASG\\Terminal.cs",
               "RelativeDocumentMoniker": "PRG2_ASG\\Terminal.cs",
               "ToolTip": "C:\\Users\\jgwz0\\Documents\\GitHub\\Airport_Assignment\\PRG2_ASG\\PRG2_ASG\\Terminal.cs",
               "RelativeToolTip": "PRG2_ASG\\Terminal.cs",
-              "ViewState": "AgIAACwAAAAAAAAAAAAUwDkAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAABQAAAAAAAAAAAAswB4AAAAdAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-01-17T10:54:43.504Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "Airline.cs",
               "DocumentMoniker": "C:\\Users\\jgwz0\\Documents\\GitHub\\Airport_Assignment\\PRG2_ASG\\PRG2_ASG\\Airline.cs",
               "RelativeDocumentMoniker": "PRG2_ASG\\Airline.cs",
               "ToolTip": "C:\\Users\\jgwz0\\Documents\\GitHub\\Airport_Assignment\\PRG2_ASG\\PRG2_ASG\\Airline.cs",
               "RelativeToolTip": "PRG2_ASG\\Airline.cs",
-              "ViewState": "AgIAABMAAAAAAAAAAAAkwB0AAAAdAAAAAAAAAA==",
+              "ViewState": "AgIAAA4AAAAAAAAAAAA3wBkAAAAgAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-01-17T10:54:20.274Z",
               "EditorCaption": ""
@@ -123,8 +122,7 @@
               "RelativeToolTip": "PRG2_ASG\\Program.cs",
               "ViewState": "AgIAAAkAAAAAAAAAAAAAABgAAAAoAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-01-16T02:14:50.698Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-01-16T02:14:50.698Z"
             },
             {
               "$type": "Document",
@@ -148,8 +146,7 @@
               "RelativeToolTip": "PRG2_ASG\\DDJBFlight.cs",
               "ViewState": "AgIAAAgAAAAAAAAAAAAxwA8AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-01-16T06:31:30.054Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-01-16T06:31:30.054Z"
             },
             {
               "$type": "Document",
@@ -161,8 +158,7 @@
               "RelativeToolTip": "PRG2_ASG\\NORMFlight.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAA7AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-01-16T06:10:16.386Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-01-16T06:10:16.386Z"
             },
             {
               "$type": "Document",
@@ -174,8 +170,7 @@
               "RelativeToolTip": "PRG2_ASG\\LWTTFlight.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABkAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-01-16T06:29:52.896Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-01-16T06:29:52.896Z"
             },
             {
               "$type": "Document",
