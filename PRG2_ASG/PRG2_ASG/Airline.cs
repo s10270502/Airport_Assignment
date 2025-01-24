@@ -56,6 +56,38 @@ namespace PRG2_ASG
             {
                 discountGiven += fees * 0.03;
             }
+
+            foreach(var flight in Flights.Values)
+            {
+                if (flight.ExpectedTime.Hour < 11 || flight.ExpectedTime.Hour >= 21)
+                {
+                    discountGiven += 110;
+                }
+
+                if (flight.Origin == "Dubai (DXB)" || flight.Origin == "Bangkok (BKK)" || flight.Origin == "Tokyo (NRT)")
+                {
+                    discountGiven += 25;
+                }
+
+                if (flight is NORMFlight)
+                {
+                    discountGiven += 50;
+                }
+            }
+
+            return fees - discountGiven;
+        }
+
+        public bool RemoveFlight(Flight flight)
+        {
+            Flights.Remove(flight.FlightNumber);
+            return true;
+        }
+
+        public override string ToString()
+        {
+            return "Name " + Name +
+                "\t Code " + Code;
         }
     }
 }
