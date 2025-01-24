@@ -19,7 +19,7 @@ namespace PRG2_ASG
             
         }
 
-        public BoardingGate(string gateName, bool supportsCFFT, bool supportsDDJB, bool supportsLWTT, Flight flight)
+        public BoardingGate(string gateName,  bool supportsDDJB, bool supportsCFFT, bool supportsLWTT, Flight? flight)
         {
             GateName = gateName;
             SupportsCFFT = supportsCFFT;

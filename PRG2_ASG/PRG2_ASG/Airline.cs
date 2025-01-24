@@ -25,11 +25,11 @@ namespace PRG2_ASG
 
         public bool AddFlight(Flight flight)
         {
-            if(Flights.ContainsKey(flight.flightNumber))
+            if(Flights.ContainsKey(flight.FlightNumber))
             {
                 return false;
             }
-            Flights.Add(Code, flight);
+            Flights.Add(flight.FlightNumber, flight);
             return true;
         }
 
@@ -48,6 +48,8 @@ namespace PRG2_ASG
             {
                 
             }
+
+            return 0.0;
         } 
     }
 }

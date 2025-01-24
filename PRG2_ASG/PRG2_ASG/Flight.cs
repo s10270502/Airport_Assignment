@@ -8,33 +8,33 @@ namespace PRG2_ASG
 {
     abstract class Flight
     {
-        public string flightNumber { get; set; }
-        public string origin { get; set; }
-        public string destination { get; set; }
-        public DateTime expectedTime { get; set; }
-        public string status { get; set; }
+        public string FlightNumber { get; set; }
+        public string Origin { get; set; }
+        public string Destination { get; set; }
+        public DateTime ExpectedTime { get; set; }
+        public string Status { get; set; }
         public Flight() { }
-        public Flight(string FN, string Origin, string Destination, DateTime ExpectedTime, string Status)
+        public Flight(string FN, string origin, string destination, DateTime expectedTime, string status)
         {
-            flightNumber = FN;
-            origin = Origin;
-            destination = Destination;
-            expectedTime = ExpectedTime;
-            status = Status;
+            FlightNumber = FN;
+            Origin = origin;
+            Destination = destination;
+            ExpectedTime = expectedTime;
+            Status = status;
+        }
+        public string GetFormattedExpected()
+        {
+            return ExpectedTime.ToString("d/M/yyyy h:mm:ss tt");
         }
         public override string ToString()
         {
-            return $" ";
+            return $"Flight Number: {FlightNumber}\nOrigin: {Origin}\nDestination: {Destination}\nExpected Time:{GetFormattedExpected()}\nStatus: {Status}\n";
         }
 
-        public virtual double CalculateFees()
-        {
-          
+        // abstract function, no implementation for calculate fees
+        public virtual double CalculateFees(){
+            return 300.0;
         }
-
-
-
-
     }
 
 

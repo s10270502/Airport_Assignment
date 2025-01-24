@@ -44,7 +44,7 @@ namespace PRG2_ASG
         {
             foreach(var airline in Airlines.Values)
             {
-                if (flight.flightNumber.StartsWith(airline.Code))
+                if (flight.FlightNumber.StartsWith(airline.Code))
                 {
                     return airline;
                 }
