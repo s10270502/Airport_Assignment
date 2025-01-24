@@ -2,6 +2,12 @@
 using System;
 using System.Collections.Generic;
 
+//==========================================================
+// Student Number : S10270502F
+// Student Name : Pierre
+// Partner Name : Javier
+//==========================================================
+
 // Feature 1 Load files (airlines and boarding gates) - Pierre
 void LoadAirlinesAndBoardingGates(Terminal terminal)
 {
@@ -88,6 +94,7 @@ void DisplayFullFlightOfAirline(Terminal terminal)
     }
     Airline selectedAirline = terminal.Airlines[airlineCode];
     List<Flight> relatedFlights = new List<Flight>();
+    // Might need to grab flights from Airline class, instead of terminal direcly.
     foreach(KeyValuePair<string, Flight> data in terminal.Flights) 
     {
         // Display matching airline code.

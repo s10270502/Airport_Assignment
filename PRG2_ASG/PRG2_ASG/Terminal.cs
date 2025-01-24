@@ -4,14 +4,21 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
+//==========================================================
+// Student Number : S10270502F
+// Student Name : Pierre
+// Partner Name : Javier
+//==========================================================
+
 namespace PRG2_ASG
 {
     class Terminal
     {
         public string TerminalName { get; set; }
-        public Dictionary<string, Airline> Airlines { get; set; } = new Dictionary<string, Airline>();
-        public Dictionary<string, Flight> Flights { get; set; } = new Dictionary<string, Flight>();
-        public Dictionary<string, BoardingGate> BoardingGates { get; set; } = new Dictionary<string, BoardingGate>();
+        public Dictionary<string, Airline> Airlines { get; set; } = new Dictionary<string, Airline>(); // SQ
+        public Dictionary<string, Flight> Flights { get; set; } = new Dictionary<string, Flight>();    // SQ 123
+        public Dictionary<string, BoardingGate> BoardingGates { get; set; } = new Dictionary<string, BoardingGate>(); // A13
         public Dictionary<string, double> GateFees { get; set; } = new Dictionary<string, double>();
 
         public Terminal()
@@ -24,6 +31,7 @@ namespace PRG2_ASG
             TerminalName = terminalName;
         }
 
+        // key: code (SQ) Value: airline name
         public bool AddAirline(Airline airline)
         {
             if(Airlines.ContainsKey(airline.Code))
@@ -56,7 +64,7 @@ namespace PRG2_ASG
         {
             foreach(var fee in Airlines.Values)
             {
-                Console.WriteLine($"{fee.Name} Total Fee: {fee.CalculateFees}");
+                Console.WriteLine($"{fee.Name} Total Fee: {fee.CalculateFees()}");
             }
         }
 
