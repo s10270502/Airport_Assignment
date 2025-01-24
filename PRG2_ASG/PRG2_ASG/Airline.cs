@@ -41,21 +41,21 @@ namespace PRG2_ASG
 
         public double CalculateFees()
         {
-            double totalDiscount = 0;
-            double totalFees = 0;   
-            foreach (var flight in Flights.Values)
-            {
-                totalFees += flight.CalculateFees();
-            }
+            double fees = 0.0;
+            double discountGiven = 0.0;
+
             int numberOfFlights = Flights.Values.Count;
             int numberOfDiscount = numberOfFlights / 3;
-            int discountGiven = 350 * numberOfDiscount;
+            discountGiven = 350 * numberOfDiscount;
+
+            foreach (var flight in Flights.Values)
+            {
+                fees += flight.CalculateFees();
+            }
             if (numberOfFlights > 5)
             {
-                
+                discountGiven += fees * 0.03;
             }
-
-            return 0.0;
-        } 
+        }
     }
 }
