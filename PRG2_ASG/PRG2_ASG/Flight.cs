@@ -4,6 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+//==========================================================
+// Student Number : S10270502F
+// Student Name : Pierre
+// Partner Name : Javier
+//==========================================================
+
 namespace PRG2_ASG
 {
     abstract class Flight
@@ -33,7 +39,7 @@ namespace PRG2_ASG
 
         // abstract function, no implementation for calculate fees
         public virtual double CalculateFees(){
-            return 300.0;
+            return 0.0;
         }
     }
 

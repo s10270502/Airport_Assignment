@@ -4,6 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+//==========================================================
+// Student Number : S10270502F
+// Student Name : Pierre
+// Partner Name : Javier
+//==========================================================
+
 namespace PRG2_ASG
 {
     class LWTTFlight : Flight
