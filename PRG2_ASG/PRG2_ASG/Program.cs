@@ -1,6 +1,9 @@
 ﻿using PRG2_ASG;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Numerics;
+using System.Reflection.Metadata.Ecma335;
 
 //==========================================================
 // Student Number : S10270502F
@@ -42,6 +45,58 @@ void LoadAirlinesAndBoardingGates(Terminal terminal)
     Console.WriteLine($"{terminal.BoardingGates.Count} Boarding Gates Loaded!");
 }
 
+//Feature 2 - Load Flights (flights)
+void LoadFlights()
+{
+    Dictionary<string, Flight> Flights = new Dictionary<string, Flight>();
+    string[] csvLines = File.ReadAllLines("flights.csv");
+    for (int i = 1; i < csvLines.Length; i++)
+    {
+        string[] data = csvLines[i].Split(',');
+        Flight flight;
+
+        if (data[4] == "DDJB")
+        {
+            flight = new DDJBFlight(data[0], data[1], data[2], DateTime.Parse(data[3]),"Scheduled",300 );
+        }
+        else if(data[4] == "CFFT")
+        {
+            flight = new CFFTFlight(data[0], data[1], data[2], DateTime.Parse(data[3]), "Scheduled", 150);
+        }
+        else if (data[4] == "LWTT")
+        {
+            flight = new LWTTFlight(data[0], data[1], data[2], DateTime.Parse(data[3]), "Scheduled", 500);
+        }
+        else
+        {
+            flight = new NORMFlight(data[0], data[1], data[2], DateTime.Parse(data[3]), "Scheduled");
+        }
+
+        Flights.Add(flight.FlightNumber, flight);
+    }
+}
+
+// Feature 3 - List all flights with basic information - Javier
+void DisplayFlights(Terminal terminal)
+{
+    Console.WriteLine("=============================================");
+    Console.WriteLine("List of Flights for Changi Airport Terminal 5");
+    Console.WriteLine("=============================================");
+    Console.WriteLine($"{"Flight Number",-16} {"Airline Name",-23} {"Origin",-23} {"Destination",-23} {"Expected Departure/Arrival Time",-23}");
+
+    foreach (KeyValuePair<string, Flight> data in terminal.Flights)
+    {
+        Flight flight = data.Value;
+
+        // Get the airline associated with the flight
+        Airline airline = terminal.GetAirlineFromFlight(flight);
+        string airlineName = airline != null ? airline.Name : "Unknown";
+
+        // Use the GetFormattedExpected method for a formatted date/time
+        Console.WriteLine($"{flight.FlightNumber,-16} {airlineName,-23} {flight.Origin,-23} {flight.Destination,-23} {flight.GetFormattedExpected(),-23}");
+    }
+}
+
 // Feature 4 - All Boarding Gates - Pierre
 void ListBoardingGates(Terminal terminal)
 {
@@ -56,7 +111,81 @@ void ListBoardingGates(Terminal terminal)
         Console.WriteLine($"{boardingGate.GateName,-16}{boardingGate.SupportsDDJB,-23}{boardingGate.SupportsCFFT,-23}{boardingGate.SupportsLWTT}");
     }
 }
+// Feature 5 - Javier
+static void DisplayFlightDetails(Flight flight)
+{
+    string specialCode = "None";
+    if (flight is DDJBFlight) specialCode = "DDJB";
+    else if (flight is CFFTFlight) specialCode = "CFFT";
+    else if (flight is LWTTFlight) specialCode = "LWTT";
 
+    Console.WriteLine($"Flight Number: {flight.FlightNumber}");
+    Console.WriteLine($"Origin: {flight.Origin}");
+    Console.WriteLine($"Destination: {flight.Destination}");
+    Console.WriteLine($"Expected Time: {flight.GetFormattedExpected()}");
+    Console.WriteLine($"Special Request Code: {specialCode}");
+}
+
+static void UpdateFlightStatus(Flight flight)
+{
+    Console.WriteLine("1. Delayed");
+    Console.WriteLine("2. Boarding");
+    Console.WriteLine("3. On Time");
+    Console.WriteLine("Please select the new status of the flight:");
+
+    string choice = Console.ReadLine();
+    if (choice == "1") flight.Status = "Delayed";
+    else if (choice == "2") flight.Status = "Boarding";
+    else flight.Status = "On Time";
+}
+
+static void AssignBoardingGate(Terminal terminal)
+{
+
+    Console.WriteLine("=============================================");
+    Console.WriteLine("Assign a Boarding Gate to a Flight");
+    Console.WriteLine("=============================================");
+
+    Console.WriteLine("Enter Flight Number:");
+    string flightNumber = Console.ReadLine();
+    if (!terminal.Flights.TryGetValue(flightNumber, out Flight flight))
+    {
+        Console.WriteLine("Flight not found.");
+        return;
+    }
+
+    Console.WriteLine("Enter Boarding Gate Name:");
+    string gateName = Console.ReadLine().Trim().ToUpper();
+
+    if (!terminal.BoardingGates.TryGetValue(gateName, out BoardingGate gate))
+    {
+        Console.WriteLine("Gate not found.");
+        return;
+    }
+
+    if (gate.Flight != null)
+    {
+        Console.WriteLine("Gate already assigned to another flight.");
+        return;
+    }
+
+    // Display flight and gate details
+    DisplayFlightDetails(flight);
+    Console.WriteLine($"\nBoarding Gate: {gate}");
+
+    // Update flight status
+    Console.WriteLine("\nWould you like to update the status of the flight? (Y/N)");
+    if (Console.ReadLine().Trim().ToUpper() == "Y")
+    {
+        UpdateFlightStatus(flight);
+    }
+
+    // Assign gate
+    gate.Flight = flight;
+    Console.WriteLine($"\nFlight {flightNumber} has been assigned to Boarding Gate {gateName}!");
+}
+
+// Feature 6 - Javier
 
 // Feature 7 - Display full flight details from an airline - Pierre
 
@@ -208,7 +337,7 @@ while (true)
     }
     else if (option == "1")
     {
-
+        DisplayFlights(terminal5);
     }
     else if (option == "2")
     {
@@ -216,7 +345,7 @@ while (true)
     }
     else if (option == "3")
     {
-
+        AssignBoardingGate(terminal5);
     }
     else if (option == "4")
     {
