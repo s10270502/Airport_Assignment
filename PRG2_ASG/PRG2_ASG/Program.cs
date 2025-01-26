@@ -53,29 +53,29 @@ void LoadFlights()
     for (int i = 1; i < csvLines.Length; i++)
     {
         string[] data = csvLines[i].Split(',');
+        string flightNumber = data[0].Trim().Replace(" ", "").ToUpper();
         Flight flight;
 
         if (data[4] == "DDJB")
         {
-            flight = new DDJBFlight(data[0], data[1], data[2], DateTime.Parse(data[3]),"Scheduled",300 );
+            flight = new DDJBFlight(flightNumber, data[1], data[2], DateTime.Parse(data[3]),"Scheduled",300 );
         }
         else if(data[4] == "CFFT")
         {
-            flight = new CFFTFlight(data[0], data[1], data[2], DateTime.Parse(data[3]), "Scheduled", 150);
+            flight = new CFFTFlight(flightNumber, data[1], data[2], DateTime.Parse(data[3]), "Scheduled", 150);
         }
         else if (data[4] == "LWTT")
         {
-            flight = new LWTTFlight(data[0], data[1], data[2], DateTime.Parse(data[3]), "Scheduled", 500);
+            flight = new LWTTFlight(flightNumber, data[1], data[2], DateTime.Parse(data[3]), "Scheduled", 500);
         }
         else
         {
-            flight = new NORMFlight(data[0], data[1], data[2], DateTime.Parse(data[3]), "Scheduled");
+            flight = new NORMFlight(flightNumber, data[1], data[2], DateTime.Parse(data[3]), "Scheduled");
         }
 
-        Flights.Add(flight.FlightNumber, flight);
+        Flights.Add(flightNumber, flight);
     }
 }
-
 // Feature 3 - List all flights with basic information - Javier
 void DisplayFlights(Terminal terminal)
 {
@@ -111,13 +111,22 @@ void ListBoardingGates(Terminal terminal)
         Console.WriteLine($"{boardingGate.GateName,-16}{boardingGate.SupportsDDJB,-23}{boardingGate.SupportsCFFT,-23}{boardingGate.SupportsLWTT}");
     }
 }
-// Feature 5 - Javier
+// Feature 5 - Assign a boarding gate to flight - Javier
 static void DisplayFlightDetails(Flight flight)
 {
     string specialCode = "None";
-    if (flight is DDJBFlight) specialCode = "DDJB";
-    else if (flight is CFFTFlight) specialCode = "CFFT";
-    else if (flight is LWTTFlight) specialCode = "LWTT";
+    if (flight is DDJBFlight)
+    {
+        specialCode = "DDJB";
+    }
+    else if (flight is CFFTFlight)
+    {
+        specialCode = "CFFT";
+    }
+    else if (flight is LWTTFlight)
+    {
+        specialCode = "LWTT";
+    }
 
     Console.WriteLine($"Flight Number: {flight.FlightNumber}");
     Console.WriteLine($"Origin: {flight.Origin}");
@@ -128,15 +137,35 @@ static void DisplayFlightDetails(Flight flight)
 
 static void UpdateFlightStatus(Flight flight)
 {
+    if (flight == null)
+    {
+        Console.WriteLine("Unable to find flight. Cannot update status.");
+        return;
+    }
+
     Console.WriteLine("1. Delayed");
     Console.WriteLine("2. Boarding");
     Console.WriteLine("3. On Time");
     Console.WriteLine("Please select the new status of the flight:");
 
-    string choice = Console.ReadLine();
-    if (choice == "1") flight.Status = "Delayed";
-    else if (choice == "2") flight.Status = "Boarding";
-    else flight.Status = "On Time";
+    string choice = Console.ReadLine().Trim();
+    if (choice == "1")
+    {
+        flight.Status = "Delayed";
+    }
+    else if (choice == "2")
+    {
+        flight.Status = "Boarding";
+    }
+    else if (choice == "3")
+    {
+        flight.Status = "On Time";
+    }
+    else
+    {
+        Console.WriteLine("Invalid choice. Status remains unchanged.");
+        return;
+    }
 }
 
 static void AssignBoardingGate(Terminal terminal)
@@ -147,15 +176,50 @@ static void AssignBoardingGate(Terminal terminal)
     Console.WriteLine("=============================================");
 
     Console.WriteLine("Enter Flight Number:");
-    string flightNumber = Console.ReadLine();
-    if (!terminal.Flights.TryGetValue(flightNumber, out Flight flight))
+    string flightNumber = Console.ReadLine()?.Trim().Replace(" ", "").ToUpper();
+
+    if (string.IsNullOrEmpty(flightNumber))
+    {
+        Console.WriteLine("Flight number cannot be empty.");
+        return;
+    }
+
+    // Extract airline code from flight number
+    string airlineCode = "";
+    if (!string.IsNullOrEmpty(flightNumber) && flightNumber.Length >= 2)
+    {
+        airlineCode = flightNumber.Substring(0, 2);
+    }
+
+    // Try to match flight number with or without airline code
+    Flight flight = null;
+    foreach (var f in terminal.Flights.Values)
+    {
+        string normalizedFlightNum = f.FlightNumber.Replace(" ", "").ToUpper();
+        if (normalizedFlightNum == flightNumber ||
+            (f.FlightNumber.Replace(" ", "").ToUpper().EndsWith(flightNumber) &&
+             f.FlightNumber.ToUpper().StartsWith(airlineCode)))
+        {
+            flight = f;
+            flightNumber = f.FlightNumber; // Use original flight number format
+            break;
+        }
+    }
+
+    if (flight == null)
     {
         Console.WriteLine("Flight not found.");
         return;
     }
 
     Console.WriteLine("Enter Boarding Gate Name:");
-    string gateName = Console.ReadLine().Trim().ToUpper();
+    string gateName = Console.ReadLine()?.Trim().Replace(" ", "").ToUpper();
+
+    if (string.IsNullOrEmpty(gateName))
+    {
+        Console.WriteLine("Boarding gate name cannot be empty.");
+        return;
+    }
 
     if (!terminal.BoardingGates.TryGetValue(gateName, out BoardingGate gate))
     {
@@ -171,7 +235,7 @@ static void AssignBoardingGate(Terminal terminal)
 
     // Display flight and gate details
     DisplayFlightDetails(flight);
-    Console.WriteLine($"\nBoarding Gate: {gate}");
+    Console.WriteLine($"\nBoarding Gate: {gate.GateName}");
 
     // Update flight status
     Console.WriteLine("\nWould you like to update the status of the flight? (Y/N)");
