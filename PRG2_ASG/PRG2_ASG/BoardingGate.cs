@@ -18,7 +18,7 @@ namespace PRG2_ASG
         public bool SupportsCFFT { get; set; }
         public bool SupportsDDJB { get; set; }
         public bool SupportsLWTT { get; set; }
-        public Flight Flight { get; set; }
+        public Flight? Flight { get; set; }
 
         public BoardingGate()
         {

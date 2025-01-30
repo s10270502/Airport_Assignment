@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Metrics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -39,43 +40,55 @@ namespace PRG2_ASG
             return true;
         }
 
-        public double CalculateFees()
+        public double CalculateDiscount()
         {
-            double fees = 0.0;
+            double totalFees = CalculateFees();
             double discountGiven = 0.0;
-
             int numberOfFlights = Flights.Values.Count;
             int numberOfDiscount = numberOfFlights / 3;
+            // For every 3 flights arriving/departing, airlines will receive a discount
             discountGiven = 350 * numberOfDiscount;
+            // For each airline with more than 5 flights arriving/departing, the airline will receive an additional discount
+            if (numberOfFlights > 5)
+            {
+                discountGiven += totalFees * 0.03;
+            }
 
             foreach (var flight in Flights.Values)
             {
-                fees += flight.CalculateFees();
-            }
-            if (numberOfFlights > 5)
-            {
-                discountGiven += fees * 0.03;
-            }
 
-            foreach(var flight in Flights.Values)
-            {
+                // For each flight arriving/ departing before 11am or after 9pm
                 if (flight.ExpectedTime.Hour < 11 || flight.ExpectedTime.Hour >= 21)
                 {
                     discountGiven += 110;
                 }
 
+                //For each flight with the Origin of Dubai (DXB), Bangkok (BKK) or Tokyo (NRT)
                 if (flight.Origin == "Dubai (DXB)" || flight.Origin == "Bangkok (BKK)" || flight.Origin == "Tokyo (NRT)")
                 {
                     discountGiven += 25;
                 }
 
+                // For each flight not indicating any Special Request Codes
                 if (flight is NORMFlight)
                 {
                     discountGiven += 50;
                 }
             }
+            return discountGiven;
+        }
 
-            return fees - discountGiven;
+        public double CalculateFees()
+        {
+            double fees = 0.0;
+
+            // Subtotal for all flight
+            foreach (var flight in Flights.Values)
+            {
+                fees += flight.CalculateFees();
+            }
+
+            return fees;
         }
 
         public bool RemoveFlight(Flight flight)

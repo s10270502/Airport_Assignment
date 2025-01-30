@@ -22,12 +22,12 @@ namespace PRG2_ASG
 
         public override string ToString()
         {
-            return $" ";
+            return base.ToString() + $", CFFT";
         }
 
         public override double CalculateFees()
         {
-            return 0.0;
+            return base.CalculateFees() + requestFee;
         }
     }
 }
