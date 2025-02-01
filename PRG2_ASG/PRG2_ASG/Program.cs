@@ -723,6 +723,7 @@ while (true)
     Console.WriteLine("5. Display Airline Flights");
     Console.WriteLine("6. Modify Flight Details");
     Console.WriteLine("7. Display Flight Schedule");
+    Console.WriteLine("A. Bulk Process Unassigned Flights");
     Console.WriteLine("0. Exit");
     Console.WriteLine();
     Console.Write("Please select your option:");
@@ -735,14 +736,17 @@ while (true)
     }
     else if (option == "1")
     {
+        Console.WriteLine("");
         DisplayFlights(terminal5);
     }
     else if (option == "2")
     {
+        Console.WriteLine("");
         ListBoardingGates(terminal5);
     }
     else if (option == "3")
     {
+        Console.WriteLine("");
         AssignBoardingGate(terminal5);
     }
     else if (option == "4")
@@ -751,6 +755,7 @@ while (true)
     }
     else if (option == "5")
     {
+        Console.WriteLine("");
         DisplayFullFlightOfAirline(terminal5);
     }
     else if (option == "6")
@@ -759,7 +764,13 @@ while (true)
     }
     else if (option == "7")
     {
-
+        Console.WriteLine("");
+        DisplayFlightsArr(SortFlightsChronologically(terminal5), terminal5);
+    }
+    else if (option == "A" || option == "a")
+    {
+        Console.WriteLine("");
+        BulkProcessFlights(terminal5);
     }
     else
     {

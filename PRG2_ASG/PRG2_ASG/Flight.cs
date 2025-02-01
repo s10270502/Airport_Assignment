@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace PRG2_ASG
 {
-    abstract class Flight
+    abstract class Flight : IComparable
     {
         public string FlightNumber { get; set; }
         public string Origin { get; set; }
@@ -40,9 +40,23 @@ namespace PRG2_ASG
             return $"Flight Number: {FlightNumber}\nOrigin: {Origin}\nDestination: {Destination}\nExpected Time:{GetFormattedExpected()}\nStatus: {Status}\n";
         }
 
-        // abstract function, no implementation for calculate fees
-        public virtual double CalculateFees(){
-            return 0.0;
+        // virtual function
+        public virtual double CalculateFees() {
+            /*
+             check if the Origin or Destination is Singapore (SIN), and apply the respective fee of $800 or $500 accordingly
+             check if the Flight has indicated a Special Request Code and charge the appropriately listed Additional Fee (Auto polymorph)
+             apply the Boarding Gate Base Fee of $300
+             **/
+            double baseBoardingGate = 300.0;
+            if (Origin == "Singapore (SIN)")
+            {
+                return baseBoardingGate + 800.0;
+            }
+            else if (Destination == "Singapore (SIN)")
+            {
+                return baseBoardingGate + 500.0;
+            }
+            return baseBoardingGate;
         }
 
         public int CompareTo(object? obj)
@@ -56,7 +70,7 @@ namespace PRG2_ASG
                 throw new ArgumentException("Object is not a Temperature");
         }
     }
-}
+    }
 
 
 
