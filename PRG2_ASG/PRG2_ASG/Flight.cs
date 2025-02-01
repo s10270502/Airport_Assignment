@@ -12,21 +12,24 @@ using System.Threading.Tasks;
 
 namespace PRG2_ASG
 {
-    abstract class Flight
+    abstract class Flight : IComparable
     {
         public string FlightNumber { get; set; }
         public string Origin { get; set; }
         public string Destination { get; set; }
         public DateTime ExpectedTime { get; set; }
         public string Status { get; set; }
+        public string SpecialRequestCode { get; set; }
         public Flight() { }
-        public Flight(string FN, string origin, string destination, DateTime expectedTime, string status)
+        public Flight(string specialRequestCode, string FN, string origin, string destination, DateTime expectedTime, string status)
         {
+            SpecialRequestCode = specialRequestCode;
             FlightNumber = FN;
             Origin = origin;
             Destination = destination;
             ExpectedTime = expectedTime;
             Status = status;
+
         }
         public string GetFormattedExpected()
         {
@@ -38,24 +41,36 @@ namespace PRG2_ASG
         }
 
         // virtual function
-        public virtual double CalculateFees(){
+        public virtual double CalculateFees() {
             /*
              check if the Origin or Destination is Singapore (SIN), and apply the respective fee of $800 or $500 accordingly
              check if the Flight has indicated a Special Request Code and charge the appropriately listed Additional Fee (Auto polymorph)
              apply the Boarding Gate Base Fee of $300
              **/
             double baseBoardingGate = 300.0;
-            if(Origin == "Singapore (SIN)")
+            if (Origin == "Singapore (SIN)")
             {
-                return baseBoardingGate+800.0;
+                return baseBoardingGate + 800.0;
             }
             else if (Destination == "Singapore (SIN)")
             {
-                return baseBoardingGate+500.0;
+                return baseBoardingGate + 500.0;
             }
             return baseBoardingGate;
         }
+
+        public int CompareTo(object? obj)
+        {
+            if (obj == null) return -1;
+
+            Flight? otherFlight = obj as Flight;
+            if (otherFlight != null)
+                return this.ExpectedTime.CompareTo(otherFlight.ExpectedTime);
+            else
+                throw new ArgumentException("Object is not a Temperature");
+        }
+    }
     }
 
 
-}
+

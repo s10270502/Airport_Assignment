@@ -14,7 +14,7 @@ namespace PRG2_ASG
 {
     class NORMFlight : Flight
     {
-        public NORMFlight(string FN, string Origin, string Destination, DateTime ExpectedTime, string Status) : base(FN, Origin, Destination, ExpectedTime, Status) { }
+        public NORMFlight(string SpecialRequestCode, string FN, string Origin, string Destination, DateTime ExpectedTime, string Status) : base(SpecialRequestCode, FN, Origin, Destination, ExpectedTime, Status) { }
         public override string ToString()
         {
             return $" ";
