@@ -1,9 +1,11 @@
 ﻿using PRG2_ASG;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
 using System.Reflection.Metadata.Ecma335;
+using System.Text.RegularExpressions;
 
 //==========================================================
 // Student Number : S10270502F
@@ -256,7 +258,117 @@ static void AssignBoardingGate(Terminal terminal)
 }
 
 // Feature 6 - Javier
+string flightNumberPattern = @"^[a-zA-Z]{2}[0-9]{3}$";
+string locationPattern = @"^[a-zA-Z\s]+\s[(]{1}[A-Z]{3}[)]{1}$";
 
+void CreateFlight(Terminal terminal)
+{
+    string? flightNumber = String.Empty;
+    string? requestCode = String.Empty;
+    string? origin = String.Empty;
+    string? destination = String.Empty;
+    string? expectedTimeStr = String.Empty;
+
+    Console.WriteLine("Enter Flight Number (AB 123):");
+    flightNumber = Console.ReadLine()?.Trim().Replace(" ", "").ToUpper();
+
+    if (flightNumber == null || flightNumber == String.Empty)
+    {
+        Console.WriteLine("Flight Number cannot be empty");
+        return;
+    }
+
+    if (Regex.IsMatch(flightNumber, flightNumberPattern))
+    {
+        Console.WriteLine($"Flight Number: {flightNumber}");
+    }
+    else
+    {
+        Console.WriteLine($"{flightNumber} is in an invalid format");
+        return;
+    }
+
+    Console.WriteLine("Enter Origin (ABCDEFG (ABC))");
+    origin = Console.ReadLine()?.Trim();
+    if (origin == null || origin == String.Empty)
+    {
+        Console.WriteLine("Origin cannot be empty");
+        return;
+    }
+    if (Regex.IsMatch(origin, locationPattern))
+    {
+        Console.WriteLine($"Origin: {origin}");
+    }
+    else
+    {
+        Console.WriteLine($"{origin} is in an invalid format");
+        return;
+    }
+
+    Console.WriteLine("Enter Destination (ABCDEFG (ABC))");
+    destination = Console.ReadLine()?.Trim();
+    if (destination == null || destination == String.Empty)
+    {
+        Console.WriteLine("Destination cannot be empty");
+        return;
+    }
+    if (Regex.IsMatch(destination, locationPattern))
+    {
+        Console.WriteLine($"Destination: {destination}");
+    }
+    else
+    {
+        Console.WriteLine($"{destination} is in an invalid format");
+        return;
+    }
+
+    Console.WriteLine("Enter Expected Time (e.g. 4.15 AM)");
+    expectedTimeStr = Console.ReadLine()?.Trim();
+    DateTime expectedTime;
+    if (expectedTimeStr == null || expectedTimeStr == String.Empty)
+    {
+        Console.WriteLine("Expected Time cannot be empty");
+        return;
+    }
+    try
+    {
+        expectedTime = DateTime.Parse(expectedTimeStr);
+    }
+    catch (Exception e)
+    {
+        Console.WriteLine($"Error: {e.Message}");
+        return;
+    }
+
+    Console.WriteLine("Enter Special Request Code (leave empty if NA)");
+    requestCode = Console.ReadLine()?.Trim().Replace(" ", "").ToUpper();
+
+    Flight newFlight;
+    if (requestCode == "DDJB")
+    {
+        newFlight = new DDJBFlight(requestCode, flightNumber, origin, destination, expectedTime, "Scheduled", 300);
+    }
+    else if (requestCode == "CFFT")
+    {
+        newFlight = new CFFTFlight(requestCode, flightNumber, origin, destination, expectedTime, "Scheduled", 150);
+    }
+    else if (requestCode == "LWTT")
+    {
+        newFlight = new LWTTFlight(requestCode, flightNumber, origin, destination, expectedTime, "Scheduled", 500);
+    }
+    else if (requestCode == "")
+    {
+        newFlight = new NORMFlight(requestCode, flightNumber, origin, destination, expectedTime, "Scheduled");
+    }
+    else
+    {
+        Console.WriteLine("Invalid Request Code");
+        return;
+    }
+
+    terminal.Flights.Add(newFlight.FlightNumber, newFlight);
+
+}
 // Feature 7 - Display full flight details from an airline - Pierre
 
 //	list all the Airlines available
@@ -380,6 +492,50 @@ for (int i = 1; i < lines.Length; i++) // Skip the header row
     }
 
 }
+// Feature 9 - Javier
+ArrayList SortFlightsChronologically(Terminal terminal)
+{
+    ArrayList flightsArr = new ArrayList();
+    foreach (Flight f in terminal.Flights.Values)
+    {
+        flightsArr.Add(f);
+    }
+    flightsArr.Sort();
+    return flightsArr;
+}
+
+void DisplayFlightsArr(ArrayList flightsArr, Terminal terminal)
+{
+    Console.WriteLine("=============================================");
+    Console.WriteLine("List of Flights for Changi Airport Terminal 5");
+    Console.WriteLine("=============================================");
+    Console.WriteLine($"{"Flight Number",-16} {"Airline Name",-23} {"Origin",-23} {"Destination",-23} {"Expected Departure/Arrival Time",-36}{"Boarding Gate",-23}{"Special Request Code"}");
+
+    foreach (Flight flight in flightsArr)
+    {
+
+        // Get the airline associated with the flight
+        Airline airline = terminal.GetAirlineFromFlight(flight);
+        string airlineName = airline != null ? airline.Name : "Unknown";
+        string assignedGateName = "";
+        foreach (BoardingGate b in terminal.BoardingGates.Values)
+        {
+            if (b.Flight == null)
+            {
+                continue;
+            }
+            if (b.Flight.FlightNumber == flight.FlightNumber)
+            {
+                BoardingGate assignedGate = b;
+                assignedGateName = assignedGate.GateName;
+            }
+        }
+        // Use the GetFormattedExpected method for a formatted date/time
+        Console.WriteLine($"{flight.FlightNumber,-16} {airlineName,-23} {flight.Origin,-23} {flight.Destination,-23} {flight.GetFormattedExpected(),-36}{assignedGateName,-23}{flight.SpecialRequestCode}");
+    }
+}
+
+
 
 Console.WriteLine($"{terminal5.Flights.Count} Flights Loaded!\n\n\n\n");
 // program loop
