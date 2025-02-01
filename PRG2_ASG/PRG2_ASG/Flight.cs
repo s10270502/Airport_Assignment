@@ -19,14 +19,17 @@ namespace PRG2_ASG
         public string Destination { get; set; }
         public DateTime ExpectedTime { get; set; }
         public string Status { get; set; }
+        public string SpecialRequestCode { get; set; }
         public Flight() { }
-        public Flight(string FN, string origin, string destination, DateTime expectedTime, string status)
+        public Flight(string specialRequestCode, string FN, string origin, string destination, DateTime expectedTime, string status)
         {
+            SpecialRequestCode = specialRequestCode;
             FlightNumber = FN;
             Origin = origin;
             Destination = destination;
             ExpectedTime = expectedTime;
             Status = status;
+
         }
         public string GetFormattedExpected()
         {
@@ -41,7 +44,19 @@ namespace PRG2_ASG
         public virtual double CalculateFees(){
             return 0.0;
         }
+
+        public int CompareTo(object? obj)
+        {
+            if (obj == null) return -1;
+
+            Flight? otherFlight = obj as Flight;
+            if (otherFlight != null)
+                return this.ExpectedTime.CompareTo(otherFlight.ExpectedTime);
+            else
+                throw new ArgumentException("Object is not a Temperature");
+        }
     }
-
-
 }
+
+
+

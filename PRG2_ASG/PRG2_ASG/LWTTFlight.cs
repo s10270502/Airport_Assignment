@@ -15,7 +15,7 @@ namespace PRG2_ASG
     class LWTTFlight : Flight
     {
         public double requestFee { get; set; }
-        public LWTTFlight(string FN, string Origin, string Destination, DateTime ExpectedTime, string Status, double RequestFee) : base(FN, Origin, Destination, ExpectedTime, Status)
+        public LWTTFlight(string SpecialRequestCode, string FN, string Origin, string Destination, DateTime ExpectedTime, string Status, double RequestFee) : base(SpecialRequestCode, FN, Origin, Destination, ExpectedTime, Status)
         {
             requestFee = RequestFee;
         }

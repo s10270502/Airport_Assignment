@@ -15,7 +15,7 @@ namespace PRG2_ASG
     class DDJBFlight : Flight
     {
         public double requestFee { get; set; }
-        public DDJBFlight(string FN, string Origin, string Destination, DateTime ExpectedTime, string Status, double RequestFee) : base(FN, Origin, Destination, ExpectedTime, Status)
+        public DDJBFlight(string SpecialRequestCode, string FN, string Origin, string Destination, DateTime ExpectedTime, string Status, double RequestFee) : base(SpecialRequestCode, FN, Origin, Destination, ExpectedTime, Status)
         {
             requestFee = RequestFee;
         }

@@ -45,35 +45,41 @@ void LoadAirlinesAndBoardingGates(Terminal terminal)
     Console.WriteLine($"{terminal.BoardingGates.Count} Boarding Gates Loaded!");
 }
 
-//Feature 2 - Load Flights (flights)
-void LoadFlights()
+//Feature 2 - Load Flights (flights) - Javier
+void LoadFlights(Terminal terminal)
 {
     Dictionary<string, Flight> Flights = new Dictionary<string, Flight>();
-    string[] csvLines = File.ReadAllLines("flights.csv");
-    for (int i = 1; i < csvLines.Length; i++)
-    {
-        string[] data = csvLines[i].Split(',');
-        string flightNumber = data[0].Trim().Replace(" ", "").ToUpper();
-        Flight flight;
 
-        if (data[4] == "DDJB")
+    string filePath = "flights.csv"; // Update with the correct file path
+    Console.WriteLine("Loading Flights...");
+    // Read the CSV file and create Flight objects
+    string[] lines = File.ReadAllLines(filePath);
+    for (int i = 1; i < lines.Length; i++) // Skip the header row
+    {
+        string[] data = lines[i].Split(',');
+        string fn = data[0].Trim().Replace(" ", "").ToUpper(); ;
+        string origin = data[1];
+        string destination = data[2];
+        DateTime expectedTime = Convert.ToDateTime(data[3]);
+        string flightType = data[4].Trim();
+
+        if (flightType == "DDJB")
         {
-            flight = new DDJBFlight(flightNumber, data[1], data[2], DateTime.Parse(data[3]),"Scheduled",300 );
+            terminal.Flights.Add(fn, new DDJBFlight(flightType, fn, origin, destination, expectedTime, "", 300));
         }
-        else if(data[4] == "CFFT")
+        else if (flightType == "LWTT")
         {
-            flight = new CFFTFlight(flightNumber, data[1], data[2], DateTime.Parse(data[3]), "Scheduled", 150);
+            terminal.Flights.Add(fn, new LWTTFlight(flightType, fn, origin, destination, expectedTime, "", 500));
         }
-        else if (data[4] == "LWTT")
+        else if (flightType == "CFFT")
         {
-            flight = new LWTTFlight(flightNumber, data[1], data[2], DateTime.Parse(data[3]), "Scheduled", 500);
+            terminal.Flights.Add(fn, new CFFTFlight(flightType, fn, origin, destination, expectedTime, "", 150));
         }
         else
         {
-            flight = new NORMFlight(flightNumber, data[1], data[2], DateTime.Parse(data[3]), "Scheduled");
+            terminal.Flights.Add(fn, new NORMFlight(flightType, fn, origin, destination, expectedTime, ""));
         }
 
-        Flights.Add(flightNumber, flight);
     }
 }
 // Feature 3 - List all flights with basic information - Javier
