@@ -507,9 +507,209 @@ void DisplayFlightsArr(ArrayList flightsArr, Terminal terminal)
 }
 
 // Advanced Feature A - Javier
+void BulkProcessFlights(Terminal terminal)
+{
+    int unassignedCounter = 0;
+    int assignedCounter = 0;
+    bool assignedFlag = false;
+    Queue<Flight> flightQueue = new Queue<Flight>();
+
+    // enqueuing
+    foreach (Flight f in terminal.Flights.Values)
+    {
+        foreach (BoardingGate b in terminal.BoardingGates.Values)
+        {
+            if (b.Flight == null)
+            {
+                continue;
+            }
+            if (f.FlightNumber == b.Flight.FlightNumber)
+            {
+                Console.WriteLine($"Flight {f.FlightNumber} is already assigned to Gate {b.GateName}");
+                assignedFlag = true;
+                assignedCounter += 1;
+            }
+        }
+        if (assignedFlag == false)
+        {
+            unassignedCounter += 1;
+            flightQueue.Enqueue(f);
+            Console.WriteLine($"Enqueuing {f.FlightNumber} for processing");
+        }
+        assignedFlag = false; // reset 'true' assignedFlag
+    }
+
+    // counting unassigned gates
+    int unassignedGateCounter = 0;
+    foreach (BoardingGate b in terminal.BoardingGates.Values)
+    {
+        if (b.Flight == null)
+        {
+            // means it is unassigned, therefore,
+            unassignedGateCounter += 1;
+        }
+    }
+
+    // total number of unassigned flights and boarding gates
+    Console.WriteLine($"\nThere are {unassignedCounter} flights that are not assigned a boarding gate");
+    Console.WriteLine($"There are {unassignedGateCounter} boarding gates that are not assigned a flight");
+
+    // begin processing
+
+    int flightsProcessed = 0;
+    int alreadyAssigned = assignedCounter;
+
+    while (flightQueue.Count() > 0)
+    {
+        Flight target = flightQueue.Dequeue();
+        Console.WriteLine($"Processing flight {target.FlightNumber}");
+        string requestCode = target.SpecialRequestCode;
+        BoardingGate? targetGate = null;
+
+        // first pass of assignment (stricter, only looking for single support gates)
+        if (requestCode != String.Empty)
+        {
+            Console.Write($"    Considering gates");
+            if (requestCode == "LWTT")
+            {
+                foreach (BoardingGate b in terminal.BoardingGates.Values)
+                {
+                    Console.Write($" {b.GateName}");
+                    if (b.SupportsLWTT && !b.SupportsDDJB && !b.SupportsCFFT && b.Flight == null)
+                    {
+                        targetGate = b;
+                        break;
+                    }
+                }
+            }
+            else if (requestCode == "DDJB")
+            {
+                foreach (BoardingGate b in terminal.BoardingGates.Values)
+                {
+                    Console.Write($" {b.GateName}");
+                    if (!b.SupportsLWTT && b.SupportsDDJB && !b.SupportsCFFT && b.Flight == null)
+                    {
+                        targetGate = b;
+                        break;
+                    }
+                }
+            }
+            else if (requestCode == "CFFT")
+            {
+                foreach (BoardingGate b in terminal.BoardingGates.Values)
+                {
+                    Console.Write($" {b.GateName}");
+                    if (!b.SupportsLWTT && !b.SupportsDDJB && b.SupportsCFFT && b.Flight == null)
+                    {
+                        targetGate = b;
+                        break;
+                    }
+                }
+            }
+            Console.WriteLine("");
+        }
+        else
+        { // no code
+            Console.Write($"    Considering gates");
+            foreach (BoardingGate b in terminal.BoardingGates.Values)
+            {
+                Console.Write($" {b.GateName}");
+                if (!b.SupportsLWTT && !b.SupportsDDJB && !b.SupportsCFFT && b.Flight == null)
+                {
+                    targetGate = b;
+                    break;
+                }
+            }
+            Console.WriteLine("");
+        }
+
+        // second pass, more lenient
+        if ((requestCode != String.Empty) && targetGate == null)
+        {
+            Console.Write($"    (Second pass) Reconsidering gates");
+            if (requestCode == "LWTT")
+            {
+                foreach (BoardingGate b in terminal.BoardingGates.Values)
+                {
+                    Console.Write($" {b.GateName}");
+                    if (b.SupportsLWTT && b.Flight == null)
+                    {
+                        targetGate = b;
+                        break;
+                    }
+                }
+            }
+            else if (requestCode == "DDJB")
+            {
+                foreach (BoardingGate b in terminal.BoardingGates.Values)
+                {
+                    Console.Write($" {b.GateName}");
+                    if (b.SupportsDDJB && b.Flight == null)
+                    {
+                        targetGate = b;
+                        break;
+                    }
+                }
+            }
+            else if (requestCode == "CFFT")
+            {
+                foreach (BoardingGate b in terminal.BoardingGates.Values)
+                {
+                    Console.Write($" {b.GateName}");
+                    if (b.SupportsCFFT && b.Flight == null)
+                    {
+                        targetGate = b;
+                        break;
+                    }
+                }
+            }
+            Console.WriteLine("");
+        }
+        else if ((requestCode == String.Empty) && targetGate == null)
+        {
+            foreach (BoardingGate b in terminal.BoardingGates.Values)
+            {
+                Console.Write($" {b.GateName}");
+                if (b.Flight == null)
+                {
+                    targetGate = b;
+                    break;
+                }
+            }
+            Console.WriteLine("");
+        }
+
+        if (targetGate == null)
+        { // no matching gates found
+            Console.WriteLine($"    No available gate found for flight {target.FlightNumber} with request code {target.SpecialRequestCode}");
+            continue;
+        }
+        else
+        {
+            Console.WriteLine($"    Flight {target.FlightNumber} has been assigned to gate {targetGate.GateName}\n");
+        }
+
+        // assignment of flight to gate
+        terminal.BoardingGates[targetGate.GateName].Flight = target;
+        flightsProcessed += 1;
 
 
-Console.WriteLine($"{terminal5.Flights.Count} Flights Loaded!\n\n\n\n");
+    }
+
+    DisplayFlights(terminal);
+    Console.WriteLine($"Total number of Flights and Boarding Gates processed and assigned: {flightsProcessed}");
+    Console.WriteLine($"Total number of Flights and Boarding Gates previously processed: {alreadyAssigned}");
+    if (alreadyAssigned == 0)
+    {
+        Console.WriteLine($"Percentage of Automatically Processed / Previously Processed: Cannot divide by zero");
+        return;
+    }
+    double quotient = flightsProcessed / alreadyAssigned;
+    Console.WriteLine($"Percentage of Automatically Processed / Previously Processed: {quotient * 100}%");
+    return;
+}
+
+//Console.WriteLine($"{terminal5.Flights.Count} Flights Loaded!\n\n\n\n");
 // program loop
 while (true)
 {
