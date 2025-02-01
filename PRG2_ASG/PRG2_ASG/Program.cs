@@ -456,42 +456,13 @@ void DisplayFullFlightOfAirline(Terminal terminal)
 }
 
 
+// Initialisations
 Terminal terminal5 = new Terminal("Terminal 5");
-
 LoadAirlinesAndBoardingGates(terminal5);
+LoadFlights(terminal5);
+Console.WriteLine($"{terminal5.Flights.Count} Flights Loaded!\n\n\n\n");
 
 
-string filePath = "flights.csv"; // Update with the correct file path
-Console.WriteLine("Loading Flights...");
-// Read the CSV file and create Flight objects
-string[] lines = File.ReadAllLines(filePath);
-for (int i = 1; i < lines.Length; i++) // Skip the header row
-{
-    string[] data = lines[i].Split(',');
-    string fn = data[0];
-    string origin = data[1];
-    string destination = data[2];
-    DateTime exepectedTime = Convert.ToDateTime(data[3]);
-    string flightType = data[4];
-
-    if (flightType == "DDJB")
-    {
-        terminal5.Flights.Add(fn, new DDJBFlight(fn, origin, destination, exepectedTime, "", 300));
-    }
-    else if (flightType == "LWTT")
-    {
-        terminal5.Flights.Add(fn, new LWTTFlight(fn, origin, destination, exepectedTime, "", 500));
-    }
-    else if (flightType == "CFFT")
-    {
-        terminal5.Flights.Add(fn, new CFFTFlight(fn, origin, destination, exepectedTime, "", 150));
-    }
-    else
-    {
-        terminal5.Flights.Add(fn, new NORMFlight(fn, origin, destination, exepectedTime, ""));
-    }
-
-}
 // Feature 9 - Javier
 ArrayList SortFlightsChronologically(Terminal terminal)
 {
@@ -535,6 +506,7 @@ void DisplayFlightsArr(ArrayList flightsArr, Terminal terminal)
     }
 }
 
+// Advanced Feature A - Javier
 
 
 Console.WriteLine($"{terminal5.Flights.Count} Flights Loaded!\n\n\n\n");
