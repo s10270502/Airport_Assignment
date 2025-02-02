@@ -935,7 +935,7 @@ void DisplayFlightsArr(ArrayList flightsArr, Terminal terminal)
     Console.WriteLine("=============================================");
     Console.WriteLine("List of Flights for Changi Airport Terminal 5");
     Console.WriteLine("=============================================");
-    Console.WriteLine($"{"Flight Number",-16} {"Airline Name",-23} {"Origin",-23} {"Destination",-23} {"Expected Departure/Arrival Time",-36}{"Boarding Gate",-23}{"Special Request Code"}");
+    Console.WriteLine($"{"Flight Number",-16} {"Airline Name",-23} {"Origin",-23} {"Destination",-23} {"Expected Departure/Arrival Time",-36}{"Status", -23}{"Boarding Gate",-23}{"Special Request Code"}");
 
     foreach (Flight flight in flightsArr)
     {
@@ -958,13 +958,14 @@ void DisplayFlightsArr(ArrayList flightsArr, Terminal terminal)
             }
         }
         
-        Console.WriteLine($"{flight.FlightNumber,-16} {airlineName,-23} {flight.Origin,-23} {flight.Destination,-23} {flight.GetFormattedExpected(),-36}{assignedGateName,-23}{flight.SpecialRequestCode}");
+        Console.WriteLine($"{flight.FlightNumber,-16} {airlineName,-23} {flight.Origin,-23} {flight.Destination,-23} {flight.GetFormattedExpected(),-36}{flight.Status, -27}{assignedGateName,-23}{flight.SpecialRequestCode}");
     }
 }
 
 // Advanced Feature A - Javier
 void BulkProcessFlights(Terminal terminal)
 {
+    //initialize 
     int unassignedCounter = 0;
     int assignedCounter = 0;
     bool assignedFlag = false;
@@ -986,6 +987,7 @@ void BulkProcessFlights(Terminal terminal)
                 assignedCounter += 1;
             }
         }
+        //if flight not assigned, enquueue
         if (assignedFlag == false)
         {
             unassignedCounter += 1;
@@ -1027,7 +1029,7 @@ void BulkProcessFlights(Terminal terminal)
         {
             Console.Write($"    Considering gates");
             if (requestCode == "LWTT")
-            {
+            {   // only suport lwtt
                 foreach (BoardingGate b in terminal.BoardingGates.Values)
                 {
                     Console.Write($" {b.GateName}");
@@ -1039,7 +1041,7 @@ void BulkProcessFlights(Terminal terminal)
                 }
             }
             else if (requestCode == "DDJB")
-            {
+            {   // only support ddjb
                 foreach (BoardingGate b in terminal.BoardingGates.Values)
                 {
                     Console.Write($" {b.GateName}");
@@ -1051,7 +1053,7 @@ void BulkProcessFlights(Terminal terminal)
                 }
             }
             else if (requestCode == "CFFT")
-            {
+            {   // onlly support cfft
                 foreach (BoardingGate b in terminal.BoardingGates.Values)
                 {
                     Console.Write($" {b.GateName}");
@@ -1065,7 +1067,7 @@ void BulkProcessFlights(Terminal terminal)
             Console.WriteLine("");
         }
         else
-        { // no code
+        { // no requirement, looking for gates with no special service
             Console.Write($"    Considering gates");
             foreach (BoardingGate b in terminal.BoardingGates.Values)
             {
@@ -1123,6 +1125,7 @@ void BulkProcessFlights(Terminal terminal)
         }
         else if ((requestCode == String.Empty) && targetGate == null)
         {
+            //if still no gate found for flight with no requirements, accept any
             foreach (BoardingGate b in terminal.BoardingGates.Values)
             {
                 Console.Write($" {b.GateName}");
@@ -1152,9 +1155,8 @@ void BulkProcessFlights(Terminal terminal)
 
     }
 
-    DisplayFlights(terminal);
+
     Console.WriteLine($"Total number of Flights and Boarding Gates processed and assigned: {flightsProcessed}");
-    Console.WriteLine($"Total number of Flights and Boarding Gates previously processed: {alreadyAssigned}");
     if (alreadyAssigned == 0)
     {
         Console.WriteLine($"Percentage of Automatically Processed / Previously Processed: Cannot divide by zero");
