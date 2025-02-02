@@ -1154,17 +1154,6 @@ void BulkProcessFlights(Terminal terminal)
 
 
     }
-
-
-    Console.WriteLine($"Total number of Flights and Boarding Gates processed and assigned: {flightsProcessed}");
-    if (alreadyAssigned == 0)
-    {
-        Console.WriteLine($"Percentage of Automatically Processed / Previously Processed: Cannot divide by zero");
-        return;
-    }
-    double quotient = flightsProcessed / alreadyAssigned;
-    Console.WriteLine($"Percentage of Automatically Processed / Previously Processed: {quotient * 100}%");
-    return;
 }
 
 //Console.WriteLine($"{terminal5.Flights.Count} Flights Loaded!\n\n\n\n");
