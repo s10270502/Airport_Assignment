@@ -50,28 +50,30 @@ void LoadAirlinesAndBoardingGates(Terminal terminal)
 
 //Feature 2 - Load Flights (flights) - Javier
 void LoadFlights(Terminal terminal)
-{
+{   // to store flight objects with flight number as key
     Dictionary<string, Flight> Flights = new Dictionary<string, Flight>();
 
     string filePath = "flights.csv"; // Update with the correct file path
     Console.WriteLine("Loading Flights...");
     // Read the CSV file and create Flight objects
     string[] lines = File.ReadAllLines(filePath);
-    for (int i = 1; i < lines.Length; i++) // Skip the header row
+    //loop thru each line and skip header
+    for (int i = 1; i < lines.Length; i++) 
     {
         string[] data = lines[i].Split(',');
-        string fn = data[0];
-        string origin = data[1];
-        string destination = data[2];
-        DateTime expectedTime = Convert.ToDateTime(data[3]);
+        //extract flight data
+        string fn = data[0]; // flight number
+        string origin = data[1]; // origin airport
+        string destination = data[2]; //destination airport
+        DateTime expectedTime = Convert.ToDateTime(data[3]); //flight time
         string flightType = data[4].Trim();
 
         if (flightType == "DDJB")
-        {
+        {   //creating flight
             terminal.Flights.Add(fn, new DDJBFlight(flightType, fn, origin, destination, expectedTime, "", 300));
         }
         else if (flightType == "LWTT")
-        {
+        {  
             terminal.Flights.Add(fn, new LWTTFlight(flightType, fn, origin, destination, expectedTime, "", 500));
         }
         else if (flightType == "CFFT")
@@ -93,12 +95,14 @@ void DisplayFlights(Terminal terminal)
     Console.WriteLine("=============================================");
     Console.WriteLine($"{"Flight Number",-16} {"Airline Name",-23} {"Origin",-23} {"Destination",-23} {"Expected Departure/Arrival Time",-23}");
 
+    //loop thru each flight in terminal flight dict
     foreach (KeyValuePair<string, Flight> data in terminal.Flights)
     {
         Flight flight = data.Value;
 
-        // Get the airline associated with the flight
+        // geting the airline associated with the flight
         Airline airline = terminal.GetAirlineFromFlight(flight);
+        // if airlinename found, use it if not display unknown
         string airlineName = airline != null ? airline.Name : "Unknown";
 
         // Use the GetFormattedExpected method for a formatted date/time
@@ -124,6 +128,7 @@ void ListBoardingGates(Terminal terminal)
 static void DisplayFlightDetails(Flight flight)
 {
     string specialCode = "None";
+    //assign corresponding code
     if (flight is DDJBFlight)
     {
         specialCode = "DDJB";
@@ -136,12 +141,17 @@ static void DisplayFlightDetails(Flight flight)
     {
         specialCode = "LWTT";
     }
-
+    else if (flight is NORMFlight)
+    {
+        specialCode = "None";
+    }
+    //display details in format
     Console.WriteLine($"Flight Number: {flight.FlightNumber}");
     Console.WriteLine($"Origin: {flight.Origin}");
     Console.WriteLine($"Destination: {flight.Destination}");
     Console.WriteLine($"Expected Time: {flight.GetFormattedExpected()}");
     Console.WriteLine($"Special Request Code: {specialCode}");
+
 }
 
 static void UpdateFlightStatus(Flight flight)
@@ -158,6 +168,7 @@ static void UpdateFlightStatus(Flight flight)
     Console.WriteLine("Please select the new status of the flight:");
 
     string choice = Console.ReadLine().Trim();
+    //get user choice and update status accordingly
     if (choice == "1")
     {
         flight.Status = "Delayed";
@@ -193,24 +204,25 @@ static void AssignBoardingGate(Terminal terminal)
         return;
     }
 
-    // Extract airline code from flight number
+    // extract airline code from flight number
     string airlineCode = "";
     if (!string.IsNullOrEmpty(flightNumber) && flightNumber.Length >= 2)
     {
         airlineCode = flightNumber.Substring(0, 2);
     }
 
-    // Try to match flight number with or without airline code
+    // try to match flight number with or without airline code
     Flight flight = null;
     foreach (var f in terminal.Flights.Values)
     {
         string normalizedFlightNum = f.FlightNumber.Replace(" ", "").ToUpper();
+        //match with either exact flight number of flight number withh airline code
         if (normalizedFlightNum == flightNumber ||
             (f.FlightNumber.Replace(" ", "").ToUpper().EndsWith(flightNumber) &&
              f.FlightNumber.ToUpper().StartsWith(airlineCode)))
         {
             flight = f;
-            flightNumber = f.FlightNumber; // Use original flight number format
+            flightNumber = f.FlightNumber; // using original flight number format
             break;
         }
     }
@@ -230,6 +242,7 @@ static void AssignBoardingGate(Terminal terminal)
         return;
     }
 
+    //check if gate exists and is available
     if (!terminal.BoardingGates.TryGetValue(gateName, out BoardingGate gate))
     {
         Console.WriteLine("Gate not found.");
@@ -244,7 +257,42 @@ static void AssignBoardingGate(Terminal terminal)
 
     // Display flight and gate details
     DisplayFlightDetails(flight);
-    Console.WriteLine($"\nBoarding Gate: {gate.GateName}");
+    Console.WriteLine($"Boarding Gate: {gate.GateName}");
+
+    if (gate.SupportsDDJB)
+    {
+        string supportsDDJB = "True";
+        Console.WriteLine($"Supports DDJB: {supportsDDJB}");
+    }
+    else
+    {
+        string supportsDDJB = "False";
+        Console.WriteLine($"Supports DDJB: {supportsDDJB}");
+    }
+
+    if (gate.SupportsCFFT)
+    {
+        string supportsCFFT = "True";
+        Console.WriteLine($"Supports CFFT: {supportsCFFT}");
+    }
+    else
+    {
+        string supportsCFFT = "False";
+        Console.WriteLine($"Supports CFFT: {supportsCFFT}");
+    }
+
+    if (gate.SupportsLWTT)
+    {
+        string supportsLWTT = "True";
+        Console.WriteLine($"Supports LWTT: {supportsLWTT}");
+    }
+    else
+    {
+        string supportsLWTT = "False";
+        Console.WriteLine($"Supports LWTT: {supportsLWTT}");
+    }
+
+
 
     // Update flight status
     Console.WriteLine("\nWould you like to update the status of the flight? (Y/N)");
@@ -259,18 +307,20 @@ static void AssignBoardingGate(Terminal terminal)
 }
 
 // Feature 6 - Javier
-string flightNumberPattern = @"^[a-zA-Z]{2}[0-9]{3}$";
-string locationPattern = @"^[a-zA-Z\s]+\s[(]{1}[A-Z]{3}[)]{1}$";
+string flightNumberPattern = @"^[a-zA-Z]{2}[0-9]{3}$"; // 2 letters followed by 3 digits
+string locationPattern = @"^[a-zA-Z\s]+\s[(]{1}[A-Z]{3}[)]{1}$"; // city name followed by 3 letter code
 
 void CreateFlight(Terminal terminal)
 {
+    //initialize empty strings for flight details
     string? flightNumber = String.Empty;
     string? requestCode = String.Empty;
     string? origin = String.Empty;
     string? destination = String.Empty;
     string? expectedTimeStr = String.Empty;
 
-    Console.WriteLine("Enter Flight Number (AB 123):");
+    //get flight number
+    Console.WriteLine("Enter Flight Number: ");
     flightNumber = Console.ReadLine()?.Trim().Replace(" ", "").ToUpper();
 
     if (flightNumber == null || flightNumber == String.Empty)
@@ -289,7 +339,8 @@ void CreateFlight(Terminal terminal)
         return;
     }
 
-    Console.WriteLine("Enter Origin (ABCDEFG (ABC))");
+    //get origin
+    Console.WriteLine("Enter Origin: ");
     origin = Console.ReadLine()?.Trim();
     if (origin == null || origin == String.Empty)
     {
@@ -306,7 +357,8 @@ void CreateFlight(Terminal terminal)
         return;
     }
 
-    Console.WriteLine("Enter Destination (ABCDEFG (ABC))");
+    //get destination
+    Console.WriteLine("Enter Destination: ");
     destination = Console.ReadLine()?.Trim();
     if (destination == null || destination == String.Empty)
     {
@@ -323,7 +375,8 @@ void CreateFlight(Terminal terminal)
         return;
     }
 
-    Console.WriteLine("Enter Expected Time (e.g. 4.15 AM)");
+    //get expected time
+    Console.WriteLine("Enter Expected Time: ");
     expectedTimeStr = Console.ReadLine()?.Trim();
     DateTime expectedTime;
     if (expectedTimeStr == null || expectedTimeStr == String.Empty)
@@ -341,7 +394,8 @@ void CreateFlight(Terminal terminal)
         return;
     }
 
-    Console.WriteLine("Enter Special Request Code (leave empty if NA)");
+    //get request code
+    Console.WriteLine("Enter Special Request Code (CFFT/DDJB/LWTT/None): ");
     requestCode = Console.ReadLine()?.Trim().Replace(" ", "").ToUpper();
 
     Flight newFlight;
@@ -357,7 +411,7 @@ void CreateFlight(Terminal terminal)
     {
         newFlight = new LWTTFlight(requestCode, flightNumber, origin, destination, expectedTime, "Scheduled", 500);
     }
-    else if (requestCode == "")
+    else if (requestCode == "NORM")
     {
         newFlight = new NORMFlight(requestCode, flightNumber, origin, destination, expectedTime, "Scheduled");
     }
@@ -367,7 +421,9 @@ void CreateFlight(Terminal terminal)
         return;
     }
 
+    //add flight to terminal flight collection
     terminal.Flights.Add(newFlight.FlightNumber, newFlight);
+    Console.WriteLine($"Flight {flightNumber} has been added!");
 
 }
 // Feature 7 (Option 5) - Display full flight details from an airline - Pierre
@@ -863,12 +919,13 @@ Console.WriteLine($"{terminal5.Flights.Count} Flights Loaded!\n\n\n\n");
 
 // Feature 9 - Javier
 ArrayList SortFlightsChronologically(Terminal terminal)
-{
+{   // new array list
     ArrayList flightsArr = new ArrayList();
     foreach (Flight f in terminal.Flights.Values)
     {
         flightsArr.Add(f);
     }
+
     flightsArr.Sort();
     return flightsArr;
 }
@@ -883,10 +940,11 @@ void DisplayFlightsArr(ArrayList flightsArr, Terminal terminal)
     foreach (Flight flight in flightsArr)
     {
 
-        // Get the airline associated with the flight
+        // get the airline associated with the flight
         Airline airline = terminal.GetAirlineFromFlight(flight);
         string airlineName = airline != null ? airline.Name : "Unknown";
         string assignedGateName = "";
+        //search thru all boarding gate to match to flight
         foreach (BoardingGate b in terminal.BoardingGates.Values)
         {
             if (b.Flight == null)
@@ -899,7 +957,7 @@ void DisplayFlightsArr(ArrayList flightsArr, Terminal terminal)
                 assignedGateName = assignedGate.GateName;
             }
         }
-        // Use the GetFormattedExpected method for a formatted date/time
+        
         Console.WriteLine($"{flight.FlightNumber,-16} {airlineName,-23} {flight.Origin,-23} {flight.Destination,-23} {flight.GetFormattedExpected(),-36}{assignedGateName,-23}{flight.SpecialRequestCode}");
     }
 }
