@@ -1148,6 +1148,8 @@ void BulkProcessFlights(Terminal terminal)
             Console.WriteLine($"    Flight {target.FlightNumber} has been assigned to gate {targetGate.GateName}\n");
         }
 
+        Console.WriteLine($"Total number of Flights and Boarding Gates processed and assigned: {flightsProcessed}");
+
         // assignment of flight to gate
         terminal.BoardingGates[targetGate.GateName].Flight = target;
         flightsProcessed += 1;
